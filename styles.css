@@ -258,3 +258,49 @@ button:active {
     margin: 10px 0;
   }
 }
+
+.card-header h1 {
+  color: var(--text-light);
+}
+
+.dark-theme .card-header h1 {
+  color: var(--text-dark);
+}
+
+.history-section h3 {
+  color: var(--text-light);
+}
+
+.dark-theme .history-section h3 {
+  color: var(--text-dark);
+}
+
+/* Shift control label color */
+.shift-control label {
+  color: var(--text-light); /* Default color for light mode */
+}
+
+.dark-theme .shift-control label {
+  color: var(--text-dark); /* Color for dark mode */
+}
+
+/* Character counter color */
+.char-counter {
+  color: var(--text-light); /* Default color for light mode */
+}
+
+.dark-theme .char-counter {
+  color: var(--text-dark); /* Color for dark mode */
+}
+
+.card-header {
+  margin-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.history-section {
+  margin-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+}

@@ -16,10 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticles();
 
   // Theme handling with smooth transition
-  themeSwitch.addEventListener('change', () => {
+  document.getElementById('light-mode').addEventListener('click', () => {
     document.body.style.transition = 'background-color 0.5s ease';
-    document.body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', themeSwitch.checked ? 'dark' : 'light');
+    document.body.classList.remove('dark-theme');
+    localStorage.setItem('theme', 'light');
+    
+    // Animate theme change
+    document.querySelectorAll('.card, textarea, button').forEach(element => {
+      element.style.animation = 'pulse 0.5s ease';
+      setTimeout(() => {
+        element.style.animation = '';
+      }, 500);
+    });
+  });
+
+  document.getElementById('dark-mode').addEventListener('click', () => {
+    document.body.style.transition = 'background-color 0.5s ease';
+    document.body.classList.add('dark-theme');
+    localStorage.setItem('theme', 'dark');
     
     // Animate theme change
     document.querySelectorAll('.card, textarea, button').forEach(element => {
