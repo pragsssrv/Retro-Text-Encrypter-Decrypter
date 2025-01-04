@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Encrypter and Decrypter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Text Encrypter and Decrypter</h1>
+    <div class="input-group">
+      <textarea id="input-text" placeholder="Enter text here..."></textarea>
+    </div>
+    <div class="settings">
+      <div class="setting-item">
+        <label for="encryption-method">Encryption Method:</label>
+        <select id="encryption-method">
+          <option value="caesar">Caesar Cipher</option>
+          <option value="base64">Base64 Encoding</option>
+          <option value="rot13">ROT13</option>
+          <option value="base32">Base32 Encoding</option>
+        </select>
+      </div>
+      <div class="setting-item">
+        <label for="shift-value">Shift Value (for Caesar/ROT13):</label>
+        <input type="number" id="shift-value" value="5" min="1" max="25" />
+      </div>
+      <div class="setting-item">
+        <label for="case-format">Text Format:</label>
+        <select id="case-format">
+          <option value="none">None</option>
+          <option value="uppercase">Uppercase</option>
+          <option value="lowercase">Lowercase</option>
+        </select>
+      </div>
+      <div class="setting-item">
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Optional">
+      </div>
+    </div>
+    <div class="button-group">
+      <button onclick="encrypt()">Encrypt</button>
+      <button onclick="decrypt()">Decrypt</button>
+      <button onclick="copyToClipboard()">Copy to Clipboard</button>
+      <button onclick="clearText()">Clear</button>
+      <button onclick="saveSettings()">Save Settings</button>
+      <button onclick="loadSettings()">Load Settings</button>
+      <button onclick="clearHistory()">Clear History</button>
+      <button onclick="exportHistory()">Export History</button>
+      <button onclick="importHistory()">Import History</button>
+      <button onclick="generateQRCode()">Generate QR Code</button>
+      <button onclick="saveToFile()">Save to File</button>
+    </div>
+    <div class="output-group">
+      <textarea id="output-text" placeholder="Result will appear here..."></textarea>
+    </div>
+    <div class="frequency-analysis">
+      <h3>Character Frequency Analysis</h3>
+      <div id="frequency-result"></div>
+    </div>
+    <div class="search-container">
+      <input type="text" id="search-history" placeholder="Search history..." oninput="filterHistory()">
+    </div>
+    <div class="history" id="history">
+      <h3>History</h3>
+      <ul id="history-list"></ul>
+    </div>
+    <div class="qr-code" id="qr-code">
+      <h3>QR Code</h3>
+      <div id="qr-code-result"></div>
+    </div>
+    <div class="night-mode-toggle">
+      <label for="night-mode">Night Mode:</label>
+      <input type="checkbox" id="night-mode" onclick="toggleNightMode()">
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
