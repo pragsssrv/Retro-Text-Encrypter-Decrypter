@@ -3,9 +3,264 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crypto Master - Text Encryption</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Crypto Master - Retro Edition</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #8B4513;
+      --secondary-color: #CD853F;
+      --background-light: #D2691E;
+      --background-dark: #2d1810;
+      --text-light: #FFE4C4;
+      --text-dark: #FFD700;
+      --card-light: #BC8F8F;
+      --card-dark: #3d2318;
+      --shadow: 0 8px 30px rgba(139, 69, 19, 0.3);
+      --gradient-primary: linear-gradient(45deg, #8B4513, #A0522D);
+      --gradient-secondary: linear-gradient(45deg, #CD853F, #DEB887);
+      --input-bg-light: #F4A460;
+      --input-bg-dark: #4a2c1c;
+      --button-hover: #D2691E;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: url('image.png') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      transition: background-color 0.3s ease;
+    }
+
+    body.dark-theme::before {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    .card {
+      background: rgba(188, 143, 143, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      border: 3px solid #8B4513;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      transform: translateY(0);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: float 6s ease-in-out infinite;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .dark-theme .card {
+      background: var(--card-dark);
+      border-color: #FFD700;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      color: var(--text-dark);
+    }
+
+    .card-header h1 {
+      color: var(--text-light);
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .dark-theme .card-header h1 {
+      color: var(--text-dark);
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    textarea {
+      background: var(--input-bg-light);
+      border: 2px solid #8B4513;
+      color: #4a2c1c;
+      font-family: 'Courier New', monospace;
+      border-radius: 4px;
+    }
+
+    .dark-theme textarea {
+      background: var(--input-bg-dark);
+      border-color: #FFD700;
+      color: #FFD700;
+    }
+
+    select {
+      background: var(--input-bg-light);
+      border: 2px solid #8B4513;
+      color: #4a2c1c;
+      font-family: 'Courier New', monospace;
+      border-radius: 4px;
+    }
+
+    .dark-theme select {
+      background: var(--input-bg-dark);
+      border-color: #FFD700;
+      color: #FFD700;
+    }
+
+    .primary-btn, .secondary-btn {
+      background: var(--gradient-primary);
+      color: var(--text-light);
+      border: 2px solid #8B4513;
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .dark-theme .primary-btn,
+    .dark-theme .secondary-btn {
+      border-color: #FFD700;
+      color: #FFD700;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+
+    .history-item {
+      background: rgba(139, 69, 19, 0.2);
+      border: 2px solid #8B4513;
+      border-radius: 4px;
+    }
+
+    .dark-theme .history-item {
+      background: rgba(255, 215, 0, 0.1);
+      border-color: #FFD700;
+      color: #FFD700;
+    }
+
+    .theme-button {
+      color: #8B4513;
+    }
+
+    .dark-theme .theme-button {
+      color: #FFD700;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+
+    #shift-control {
+      color: var(--text-light);
+      font-family: 'Courier New', monospace;
+    }
+
+    .dark-theme #shift-control {
+      color: var(--text-dark);
+    }
+
+    input[type="range"] {
+      accent-color: #8B4513;
+    }
+
+    .dark-theme input[type="range"] {
+      accent-color: #FFD700;
+    }
+
+    .char-counter {
+      color: var(--text-light);
+      font-family: 'Courier New', monospace;
+    }
+
+    .dark-theme .char-counter {
+      color: var(--text-dark);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 5px rgba(108, 99, 255, 0.2); }
+      50% { box-shadow: 0 0 20px rgba(108, 99, 255, 0.6); }
+      100% { box-shadow: 0 0 5px rgba(108, 99, 255, 0.2); }
+    }
+
+    .shake {
+      animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    .history-item {
+      transform-origin: left;
+      animation: slideIn 0.5s ease forwards;
+      background: rgba(108, 99, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .history-item:hover {
+      transform: translateX(10px) scale(1.02);
+      background: rgba(108, 99, 255, 0.2);
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -23,51 +278,190 @@
       </div>
 
       <div class="input-section">
-        <div class="textarea-wrapper">
-          <textarea id="input-text" placeholder="Enter your secret message..." maxlength="500"></textarea>
-          <div class="char-counter">0/500</div>
-        </div>
+        <textarea id="input-text" placeholder="Enter your secret message..." maxlength="500"></textarea>
+        <div class="char-counter">0/500</div>
         
         <div class="controls">
-          <div class="method-select">
-            <select id="encryption-method">
-              <option value="caesar">Caesar Cipher</option>
-              <option value="base64">Base64</option>
-              <option value="rot13">ROT13</option>
-            </select>
-            <div class="shift-control" id="shift-control">
-              <label>Shift Amount:</label>
-              <input type="range" id="shift-value" min="1" max="25" value="3">
-              <span id="shift-display">3</span>
-            </div>
+          <select id="encryption-method">
+            <option value="caesar">Caesar Cipher</option>
+            <option value="base64">Base64</option>
+            <option value="rot13">ROT13</option>
+          </select>
+          
+          <div id="shift-control">
+            <label>Shift Amount: <span id="shift-display">3</span></label>
+            <input type="range" id="shift-value" min="1" max="25" value="3">
           </div>
           
-          <div class="action-buttons">
-            <button id="encrypt-btn" class="primary-btn">
-              <i class="fas fa-lock"></i> Encrypt
-            </button>
-            <button id="decrypt-btn" class="secondary-btn">
-              <i class="fas fa-lock-open"></i> Decrypt
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="output-section">
-        <div class="textarea-wrapper">
-          <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
-          <button id="copy-btn" class="icon-btn">
-            <i class="fas fa-copy"></i>
+          <button id="encrypt-btn" class="primary-btn">
+            <i class="fas fa-lock"></i> Encrypt
+          </button>
+          <button id="decrypt-btn" class="secondary-btn">
+            <i class="fas fa-lock-open"></i> Decrypt
           </button>
         </div>
       </div>
 
+      <div class="output-section">
+        <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
+        <button id="copy-btn" class="primary-btn">
+          <i class="fas fa-copy"></i> Copy
+        </button>
+      </div>
+
       <div class="history-section">
         <h3><i class="fas fa-history"></i> Recent Activity</h3>
-        <div class="history-list" id="history-list"></div>
+        <div id="history-list"></div>
       </div>
     </div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize elements
+      const inputText = document.getElementById('input-text');
+      const outputText = document.getElementById('output-text');
+      const encryptBtn = document.getElementById('encrypt-btn');
+      const decryptBtn = document.getElementById('decrypt-btn');
+      const copyBtn = document.getElementById('copy-btn');
+      const methodSelect = document.getElementById('encryption-method');
+      const shiftValue = document.getElementById('shift-value');
+      const shiftDisplay = document.getElementById('shift-display');
+      const historyList = document.getElementById('history-list');
+
+      // Theme switching
+      document.getElementById('light-mode').addEventListener('click', () => {
+        document.body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light');
+      });
+
+      document.getElementById('dark-mode').addEventListener('click', () => {
+        document.body.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark');
+      });
+
+      // Load saved theme
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+      }
+
+      // Character counter
+      inputText.addEventListener('input', (e) => {
+        const counter = document.querySelector('.char-counter');
+        const count = e.target.value.length;
+        counter.textContent = `${count}/500`;
+      });
+
+      // Method selection handling
+      methodSelect.addEventListener('change', () => {
+        const shiftControl = document.getElementById('shift-control');
+        shiftControl.style.display = methodSelect.value === 'caesar' ? 'flex' : 'none';
+      });
+
+      // Shift value display
+      shiftValue.addEventListener('input', (e) => {
+        shiftDisplay.textContent = e.target.value;
+      });
+
+      // Encryption function
+      function encrypt(text, method, shift) {
+        switch (method) {
+          case 'caesar':
+            return text.split('').map(char => {
+              if (char.match(/[a-zA-Z]/)) {
+                const code = char.charCodeAt(0);
+                const isUpperCase = code < 91;
+                const base = isUpperCase ? 65 : 97;
+                return String.fromCharCode(
+                  (code - base + parseInt(shift)) % 26 + base
+                );
+              }
+              return char;
+            }).join('');
+          case 'base64':
+            return btoa(text);
+          case 'rot13':
+            return encrypt(text, 'caesar', 13);
+          default:
+            return text;
+        }
+      }
+
+      // Decrypt function
+      function decrypt(text, method, shift) {
+        switch (method) {
+          case 'caesar':
+            return encrypt(text, method, 26 - shift);
+          case 'base64':
+            try {
+              return atob(text);
+            } catch {
+              return 'Invalid Base64 input';
+            }
+          case 'rot13':
+            return encrypt(text, 'caesar', 13);
+          default:
+            return text;
+        }
+      }
+
+      // Button handlers
+      encryptBtn.addEventListener('click', () => {
+        const text = inputText.value;
+        const method = methodSelect.value;
+        const shift = parseInt(shiftValue.value);
+        
+        if (!text) return;
+
+        const result = encrypt(text, method, shift);
+        outputText.value = result;
+        addToHistory(text, result, 'Encrypted');
+      });
+
+      decryptBtn.addEventListener('click', () => {
+        const text = inputText.value;
+        const method = methodSelect.value;
+        const shift = parseInt(shiftValue.value);
+        
+        if (!text) return;
+
+        const result = decrypt(text, method, shift);
+        outputText.value = result;
+        addToHistory(text, result, 'Decrypted');
+      });
+
+      // Copy button handler
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(outputText.value);
+          copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+
+      // History management
+      function addToHistory(input, output, type) {
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        const truncatedInput = input.length > 30 ? input.substring(0, 30) + '...' : input;
+        item.innerHTML = `
+          <div class="history-content">
+            <span class="history-type">${type}</span>
+            <span class="history-text">${truncatedInput}</span>
+            <span class="history-time">${new Date().toLocaleTimeString()}</span>
+          </div>
+        `;
+        historyList.insertBefore(item, historyList.firstChild);
+      }
+
+      // Initialize shift control visibility
+      const shiftControl = document.getElementById('shift-control');
+      shiftControl.style.display = methodSelect.value === 'caesar' ? 'flex' : 'none';
+    });
+  </script>
 </body>
 </html>
